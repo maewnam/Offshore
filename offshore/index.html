@@ -1,0 +1,158 @@
+<html lang="en" class="	ext-strict">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Offshore PHP Dianotics Tools</title>
+
+		<link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="libs/style.css" rel="stylesheet">
+		<script type="text/javascript" src="libs/jquery/jquery-3.1.1.min.js"></script>
+	</head>
+	<body class=" ext-webkit ext-chrome" id="syno-nsc-ext-gen3">
+		<div class="container">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">AMANAGER</a>
+					</div>
+					<form class="navbar-form navbar-left" role="search" onsubmit="return false;">
+						<div class="form-group">
+							<input id="txtPassword" type="password" class="form-control" placeholder="Password">
+						</div>
+						<div class="form-group">
+							 <p id="txtStatus" class="form-control-static">Connected</p>
+						</div>
+						<button onclick="fn.connect()" id="btnConnect" type="submit" class="btn btn-primary">Connect</button>
+						<div class="form-group">
+							<select id="cbbDatabase" class="form-control">
+								<option value="">Select Database</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<select id="cbbTable" class="form-control">
+								<option value="">Select Table</option>
+							</select>
+						</div>
+						<div id="gLatency" class="form-group">
+							<button id="btnLook" class="btn btn-success" onclick="fn.change_concurrent()">Change Concurrents</button>
+							<button id="btnLook" class="btn btn-warning">Force Logout</button>
+						
+							<label>Latency</label>
+							<select id="cbbLatency" class="form-control">
+								<option value="1000">1s</option>
+								<option value="2000">2s</option>
+								<option value="3000" selected>3s</option>
+								<option value="4000">4s</option>
+								<option value="5000">5s</option>
+								<option value="10000">10s</option>
+								<option value="15000">15s</option>
+							</select>
+							<button onclick="fn.empty_table()" id="btnConnect" type="submit" class="btn btn-danger">Remove All</button>
+						
+						</div>
+					</form>
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#">Updated : <span id="txtUpdated"></span></a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div><!--/.container-fluid -->
+			</nav>
+		</div>
+		<div class="container-fluid">
+			<div id="mainpanel">
+			
+			</div>
+		</div> <!-- /container -->
+
+		<div id="modalAlert" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Alert</h4>
+					</div>
+					<div class="modal-body">
+						<p id="txtAlertMessage">One fine body&hellip;</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div id="modelDelete" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Confirm</h4>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to truncate table : <span id="txtTableRemove"></span> ?</p>
+					</div>
+					<div class="modal-footer">
+						<button onclick="fn.truncate()" type="button" class="btn btn-danger">Confirm</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div id="modelChangeConcurrent" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Confirm</h4>
+					</div>
+					<div class="modal-body">
+						<form id="frmChangeConcurrent">
+						<p>Are your sure to change?</p>
+						<input type="hidden" name="txtCurrentConcurrent">
+						<select name="cbbConcurrent" class="form-control">
+							<option value="0">No Concurrents</option>
+							<option value="1">1 (Demo)</option>
+							<option value="3">3</option>
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="30">30</option>
+						</select>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onclick="fn.confirm_change_concurrent();">Confirm</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div id="modelConfirmChangeConcurent" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Confirm</h4>
+					</div>
+					<div class="modal-body">
+						<form id="frmChangeConcurrent">
+						<p>Are your sure to change from to plan <span id="txtPlan"></span>?</p>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onclick="fn.do_change_concurrent();">Confirm</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="libs/script.js"></script>
+	</body>
+</html>
